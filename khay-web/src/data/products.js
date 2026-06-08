@@ -27,8 +27,8 @@ export const products = [
   },
   {
     id: 3,
-    name: 'Cheesecuit Brownis',
-    slug: 'cheesecuit-brownis',
+    name: 'Cheesecuit ',
+    slug: 'cheesecuit',
     tagline: 'Perpaduan Keju & Cokelat',
     description: 'Brownies special dengan topping cheesecuit yang creamy dan lumer. Perpaduan sempurna antara brownies fudgy dengan lapisan keju biskuit yang gurih manis. Wajib coba!',
     price: 28000,
