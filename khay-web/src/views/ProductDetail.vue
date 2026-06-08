@@ -603,6 +603,12 @@ watch(() => route.params.slug, () => {
     gap: var(--space-2xl);
   }
 
+  .detail-gallery {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
   .info-title {
     font-size: 1.8rem;
   }

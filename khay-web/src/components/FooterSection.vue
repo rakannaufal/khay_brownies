@@ -237,10 +237,27 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}`
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 968px) {
+  .footer-content {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: var(--space-lg);
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+}
+
+@media (max-width: 575px) {
+  .footer {
+    padding-top: 40px;
+  }
+
+  .footer-wave svg {
+    height: 40px;
+  }
+
   .footer-content {
     grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
+    padding: var(--space-lg) 0 var(--space-lg);
     text-align: center;
   }
 
@@ -254,9 +271,15 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}`
     margin-right: auto;
   }
 
+  .footer-links ul,
+  .footer-contact ul {
+    align-items: center;
+  }
+
   .footer-bottom-content {
     flex-direction: column;
     text-align: center;
+    gap: var(--space-xs);
   }
 }
 </style>

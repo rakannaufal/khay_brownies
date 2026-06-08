@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { WHATSAPP_NUMBER } from '../data/products'
 import AppIcon from './AppIcon.vue'
 
@@ -57,8 +57,20 @@ function handleScroll() {
   isScrolled.value = window.scrollY > 30
 }
 
+// Block body scroll when menu is open on mobile
+watch(menuOpen, (isOpen) => {
+  if (isOpen) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
+
 onMounted(() => window.addEventListener('scroll', handleScroll))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped>
@@ -187,23 +199,21 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
   .navbar-links {
     position: fixed;
-    top: 0;
+    top: -100vh;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: 100vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: var(--space-md);
     background: var(--bg-cream);
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-base);
+    z-index: 1000;
+    transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .navbar-links.open {
-    opacity: 1;
-    visibility: visible;
+    top: 0;
   }
 
   .navbar-links li a {

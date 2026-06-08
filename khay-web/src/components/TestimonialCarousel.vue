@@ -76,6 +76,11 @@ function updateSlidesPerView() {
   if (w < 480) slidesPerView.value = 1
   else if (w < 768) slidesPerView.value = 2
   else slidesPerView.value = 3
+
+  // Clamp current index to stay within maximum scroll boundaries
+  if (currentIndex.value > reviews.length - slidesPerView.value) {
+    currentIndex.value = Math.max(0, reviews.length - slidesPerView.value)
+  }
 }
 
 const dotCount = computed(() => Math.max(1, reviews.length - slidesPerView.value + 1))
@@ -294,9 +299,9 @@ onUnmounted(() => {
 
 .lightbox-close {
   position: absolute;
-  top: -40px;
-  right: 0;
-  background: var(--white);
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.95);
   color: var(--secondary);
   width: 36px;
   height: 36px;
@@ -304,6 +309,8 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
+  box-shadow: var(--shadow-card);
 }
 
 .lightbox-img {

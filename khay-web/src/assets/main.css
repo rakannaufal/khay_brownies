@@ -381,6 +381,10 @@ ul, ol {
 }
 
 @media (max-width: 480px) {
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+
   .section-title {
     font-size: 1.4rem;
   }
