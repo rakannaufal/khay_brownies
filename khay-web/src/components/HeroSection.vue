@@ -17,7 +17,7 @@
         </div>
         <h1 class="hero-title">
           Brownies <span class="highlight">Homemade</span><br />
-          yang Bikin <span class="highlight wiggle-text">Nagih!</span>
+          Coklatnya nyoklat <span class="highlight wiggle-text">Banget!</span>
         </h1>
         <p class="hero-description">
           Dibuat dengan cinta dan bahan premium pilihan. Tekstur fudgy, rasa cokelat yang rich, 
