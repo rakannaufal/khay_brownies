@@ -57,7 +57,7 @@
       </div>
       <div class="hero-image">
         <div class="image-wrapper">
-          <img src="/images/brownis/brownis_box_l_2.jpeg" alt="Khay Brownies Box" class="main-image" />
+          <img src="/images/brownis/brownis_box_l.jpeg" alt="Khay Brownies Box" class="main-image" />
           <div class="image-ring"></div>
         </div>
         <div class="floating-card card-1 animate-float">
