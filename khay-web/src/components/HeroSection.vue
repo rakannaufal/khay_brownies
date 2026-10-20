@@ -16,8 +16,8 @@
           <AppIcon name="tag" :size="14" /> Homemade with Love
         </div>
         <h1 class="hero-title">
-          Brownies <span class="highlight">Homemade</span><br />
-          Coklatnya nyoklat <span class="highlight wiggle-text">Banget!</span>
+          <span class="hero-title-line">Brownies <span class="highlight">Homemade</span></span>
+          <span class="hero-title-line">Coklatnya nyoklat <span class="highlight wiggle-text">Banget!</span></span>
         </h1>
         <p class="hero-description">
           Dibuat dengan cinta dan bahan premium pilihan. Tekstur fudgy, rasa cokelat yang rich, 
@@ -215,6 +215,18 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
   line-height: 1.15;
   margin-bottom: var(--space-lg);
   color: var(--text-dark);
+}
+
+.hero-title-line {
+  display: block;
+}
+
+/* Keep desktop line breaks stable while the heading font loads. */
+@media (min-width: 969px) {
+  .hero-title .highlight {
+    display: block;
+    width: fit-content;
+  }
 }
 
 .highlight {
