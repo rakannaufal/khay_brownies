@@ -1,0 +1,9 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Khay Brownies",
+    "documentationUrl": "https://khay-brownies.vercel.app/llms.txt",
+    "logoUrl": "https://khay-brownies.vercel.app/images/logo-128.webp"
+  },
+  "entries": []
+}

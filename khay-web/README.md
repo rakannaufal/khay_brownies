@@ -48,5 +48,8 @@ Generated images are committed, so production builds need no image tools.
 `npm test` checks prerendered routes, metadata, local assets, the footer credit,
 and crawler files. Run it after building. `npm audit` checks dependencies.
 
+`public/llms.txt` lists the public catalog for agents. The well-known AI catalog
+declares no callable AI services; ordering remains the existing WhatsApp flow.
+
 For performance audits, test the production preview or deployed URL with Lighthouse
 on both mobile and desktop. Scores vary with hardware, network, and server response.

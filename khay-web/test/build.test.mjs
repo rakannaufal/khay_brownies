@@ -15,6 +15,16 @@ test('robots.txt exposes crawl rules and the sitemap, rather than the SPA fallba
   for (const slug of slugs) assert.ok(sitemap.includes(`/product/${slug}</loc>`))
 })
 
+test('agent discovery files expose readable documentation and an honest capability catalog', async () => {
+  const documentation = await readFile(resolve(dist, 'llms.txt'), 'utf8')
+  assert.match(documentation, /^# Khay Brownies/m)
+  for (const slug of slugs) assert.ok(documentation.includes(`/product/${slug}`))
+  const catalog = JSON.parse(await readFile(resolve(dist, '.well-known/ai-catalog.json'), 'utf8'))
+  assert.equal(catalog.specVersion, '1.0')
+  assert.equal(catalog.host.displayName, 'Khay Brownies')
+  assert.deepEqual(catalog.entries, [])
+})
+
 for (const path of ['/', ...slugs.map(slug => `/product/${slug}`)]) {
   test(`${path} has readable HTML, matching metadata, and resolvable assets before JavaScript`, async () => {
     const html = await readFile(resolve(dist, `.${path}`, 'index.html'), 'utf8')

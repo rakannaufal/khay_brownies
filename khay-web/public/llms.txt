@@ -1,0 +1,20 @@
+# Khay Brownies
+
+> Katalog brownies homemade dengan pemesanan melalui WhatsApp.
+
+Khay Brownies menyediakan brownies mini, brownies cup, cheesecuit, dan brownies box.
+Harga dan pilihan produk tersedia pada halaman produk. Pemesanan dikonfirmasi melalui WhatsApp.
+
+## Produk
+
+- [Katalog Khay Brownies](https://khay-brownies.vercel.app/): Daftar produk, harga, dan ulasan pelanggan.
+- [Brownis Mini Size](https://khay-brownies.vercel.app/product/brownis-mini-size): Brownies mini, Rp8.000.
+- [Brownis Cup Mini](https://khay-brownies.vercel.app/product/brownis-cup-mini): Brownies cup, Rp20.000, dengan pilihan topping.
+- [Cheesecuit](https://khay-brownies.vercel.app/product/cheesecuit): Perpaduan keju dan cokelat, Rp28.000.
+- [Brownis Box M](https://khay-brownies.vercel.app/product/brownis-box-m): Brownies box medium, Rp45.000.
+- [Brownis Box L](https://khay-brownies.vercel.app/product/brownis-box-l): Brownies box besar, Rp85.000.
+
+## Kontak
+
+- [WhatsApp](https://wa.me/6288271128082): Konfirmasi pesanan dan ketersediaan produk.
+- [Instagram](https://www.instagram.com/khay.brownies/): Akun Khay Brownies.

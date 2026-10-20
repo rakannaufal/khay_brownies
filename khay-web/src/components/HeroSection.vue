@@ -416,6 +416,12 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
     font-size: 1.8rem;
   }
 
+  .hero-title .wiggle-text {
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
+  }
+
   .hero-description {
     font-size: 1rem;
   }
