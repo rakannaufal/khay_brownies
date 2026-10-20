@@ -66,13 +66,11 @@
         <div class="footer-divider"></div>
         <div class="footer-bottom-content">
           <p class="copyright">
-            &copy; {{ currentYear }} Khay Brownies. All rights reserved.
-          </p>
-          <p class="credit">
-            Designed by
-            <a href="https://www.instagram.com/rakannfls/" target="_blank" class="credit-link">
-              <AppIcon name="instagram" :size="13" /> rakannaufal
-            </a>
+            &copy; {{ currentYear }} Khay Brownies &middot;
+            <span class="credit">
+              Website by
+              <a href="https://www.instagram.com/rakandevv/" target="_blank" rel="noopener noreferrer" class="credit-link">rakandev</a>
+            </span>
           </p>
         </div>
       </div>
@@ -217,22 +215,19 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}`
 }
 
 .credit {
-  font-size: 0.85rem;
-  opacity: 0.7;
-  font-weight: 600;
+  white-space: nowrap;
 }
 
 .credit-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  display: inline-block;
   color: var(--primary);
   opacity: 1;
   font-weight: 700;
-  transition: all var(--transition-fast);
+  transition: opacity var(--transition-fast);
 }
 
-.credit-link:hover {
+.credit-link:hover,
+.credit-link:focus-visible {
   opacity: 0.8;
   text-decoration: underline;
 }
