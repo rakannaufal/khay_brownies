@@ -57,7 +57,23 @@
       </div>
       <div class="hero-image">
         <div class="image-wrapper">
-          <img src="/images/brownis/brownis_box_l.jpeg" alt="Khay Brownies Box" class="main-image" />
+          <picture>
+            <source
+              type="image/avif"
+              srcset="/images/hero-440.avif 440w, /images/hero-760.avif 760w"
+              sizes="(max-width: 480px) 220px, (max-width: 968px) 280px, 380px"
+            />
+            <img
+              src="/images/hero-760.webp"
+              srcset="/images/hero-440.webp 440w, /images/hero-760.webp 760w"
+              sizes="(max-width: 480px) 220px, (max-width: 968px) 280px, 380px"
+              width="760"
+              height="760"
+              fetchpriority="high"
+              alt="Khay Brownies Box"
+              class="main-image"
+            />
+          </picture>
           <div class="image-ring"></div>
         </div>
         <div class="floating-card card-1 animate-float">
@@ -109,7 +125,6 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 .blob {
   position: absolute;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: blob 8s ease-in-out infinite;
   opacity: 0.15;
 }
 
@@ -180,10 +195,6 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 }
 
 /* --- Content --- */
-.hero-content {
-  animation: slideInLeft 0.8s ease-out;
-}
-
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -281,7 +292,6 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: slideInRight 0.8s ease-out;
 }
 
 .image-wrapper {
@@ -296,7 +306,6 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
   object-fit: cover;
   border-radius: 30% 70% 53% 47% / 26% 46% 54% 74%;
   box-shadow: var(--shadow-float);
-  animation: blob 10s ease-in-out infinite;
   border: 5px solid var(--white);
 }
 
@@ -306,7 +315,12 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
   border-radius: 30% 70% 53% 47% / 26% 46% 54% 74%;
   border: 3px dashed var(--secondary);
   opacity: 0.2;
-  animation: blob 10s ease-in-out infinite reverse;
+}
+
+.image-wrapper picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .floating-card {

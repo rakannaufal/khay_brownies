@@ -1,7 +1,17 @@
 <template>
   <router-link :to="`/product/${product.slug}`" class="product-card card" :style="{ animationDelay: `${index * 0.1}s` }">
     <div class="card-image-wrapper">
-      <img :src="product.images[0]" :alt="product.name" class="card-image" loading="lazy" />
+      <img
+        :src="product.images[0]"
+        :srcset="`${product.images[0].replace('.webp', '-480.webp')} 480w, ${product.images[0]} ${product.imageWidth}w`"
+        sizes="(max-width: 480px) calc(100vw - 32px), (max-width: 768px) 50vw, 380px"
+        :width="product.imageWidth"
+        :height="product.imageHeight"
+        :alt="product.name"
+        class="card-image"
+        loading="lazy"
+        decoding="async"
+      />
       <div class="card-badge" v-if="product.badge">{{ product.badge }}</div>
       <div class="card-overlay">
         <span class="overlay-text">

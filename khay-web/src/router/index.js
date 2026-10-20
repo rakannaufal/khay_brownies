@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { getPageMetadata } from '../data/site'
 
 const routes = [
   {
@@ -16,18 +17,27 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) return savedPosition
-    if (to.hash) return { el: to.hash, behavior: 'smooth' }
-    return { top: 0, behavior: 'smooth' }
-  }
-})
+export function createAppRouter() {
+  const router = createRouter({
+    history: typeof window === 'undefined' ? createMemoryHistory() : createWebHistory(),
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) return savedPosition
+      if (to.hash) return { el: to.hash, behavior: 'smooth' }
+      return { top: 0, behavior: 'smooth' }
+    }
+  })
 
-router.beforeEach((to) => {
-  document.title = to.meta.title || 'Khay Brownies'
-})
+  router.afterEach((to) => {
+    if (typeof document === 'undefined') return
+    const metadata = getPageMetadata(to.path)
+    document.title = metadata.title
+    document.querySelector('meta[name="description"]').content = metadata.description
+    document.querySelector('link[rel="canonical"]').href = metadata.url
+    for (const key of ['title', 'description', 'url', 'image']) {
+      document.querySelector(`meta[property="og:${key}"]`).content = metadata[key]
+    }
+  })
 
-export default router
+  return router
+}

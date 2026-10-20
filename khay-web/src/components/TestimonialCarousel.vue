@@ -1,5 +1,5 @@
 <template>
-  <section class="testimonial-section" id="testimoni">
+  <section ref="section" class="testimonial-section" id="testimoni" @mouseenter="stopAutoplay" @mouseleave="startAutoplay" @focusin="stopAutoplay" @focusout="startAutoplay">
     <div class="container">
       <div class="section-icon-wrap">
         <AppIcon name="chat" :size="28" />
@@ -15,16 +15,17 @@
         <div class="carousel-track-container">
           <div class="carousel-track" :style="trackStyle">
             <div
-              v-for="review in reviews"
+              v-for="(review, i) in reviews"
               :key="review.id"
               class="carousel-slide"
+              :inert="i < currentIndex || i >= currentIndex + slidesPerView"
             >
-              <div class="review-card" @click="openLightbox(review)">
-                <img :src="review.image" :alt="`Review ${review.id}`" class="review-image" loading="lazy" />
+              <button type="button" class="review-card" @click="openLightbox(review)" :aria-label="`Perbesar ulasan pelanggan ${review.id}`">
+                <img :src="review.image" :alt="`Ulasan pelanggan ${review.id}`" class="review-image" loading="lazy" decoding="async" />
                 <div class="review-hover">
                   <span><AppIcon name="search" :size="16" /> Lihat</span>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -43,32 +44,41 @@
           :class="{ active: currentIndex === i }"
           @click="goTo(i)"
           :aria-label="`Go to slide ${i + 1}`"
+          :aria-current="currentIndex === i ? 'true' : undefined"
         />
       </div>
+      <button type="button" class="autoplay-control" :aria-pressed="autoplayPaused" @click="toggleAutoplay">
+        {{ autoplayPaused ? 'Putar ulasan otomatis' : 'Jeda ulasan otomatis' }}
+      </button>
     </div>
 
     <!-- Lightbox -->
-    <Teleport to="body">
-      <div class="lightbox" v-if="lightboxImage" @click="lightboxImage = null">
-        <div class="lightbox-content" @click.stop>
-          <button class="lightbox-close" @click="lightboxImage = null">
+    <Teleport to="#dialogs">
+      <dialog ref="lightboxDialog" class="lightbox" aria-label="Ulasan pelanggan" @click="closeOnBackdrop" @close="lightboxImage = null">
+        <div class="lightbox-content" v-if="lightboxImage">
+          <button class="lightbox-close" aria-label="Tutup ulasan" @click="lightboxDialog.close()">
             <AppIcon name="x" :size="18" />
           </button>
           <img :src="lightboxImage" alt="Review" class="lightbox-img" />
         </div>
-      </div>
+      </dialog>
     </Teleport>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { reviews } from '../data/products'
 import AppIcon from './AppIcon.vue'
 
 const currentIndex = ref(0)
 const slidesPerView = ref(3)
 const lightboxImage = ref(null)
+const lightboxDialog = ref(null)
+const section = ref(null)
+const autoplayPaused = ref(false)
+let observer = null
+let isVisible = false
 let autoplayTimer = null
 
 function updateSlidesPerView() {
@@ -113,11 +123,20 @@ function goTo(i) {
   currentIndex.value = i
 }
 
-function openLightbox(review) {
+async function openLightbox(review) {
+  stopAutoplay()
   lightboxImage.value = review.image
+  await nextTick()
+  lightboxDialog.value.showModal()
+}
+
+function closeOnBackdrop(event) {
+  if (event.target === lightboxDialog.value) lightboxDialog.value.close()
 }
 
 function startAutoplay() {
+  stopAutoplay()
+  if (!isVisible || autoplayPaused.value || lightboxImage.value || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   autoplayTimer = setInterval(next, 4000)
 }
 
@@ -125,15 +144,25 @@ function stopAutoplay() {
   clearInterval(autoplayTimer)
 }
 
+function toggleAutoplay() {
+  autoplayPaused.value = !autoplayPaused.value
+  startAutoplay()
+}
+
 onMounted(() => {
   updateSlidesPerView()
   window.addEventListener('resize', updateSlidesPerView)
-  startAutoplay()
+  observer = new IntersectionObserver(([entry]) => {
+    isVisible = entry.isIntersecting
+    startAutoplay()
+  })
+  observer.observe(section.value)
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateSlidesPerView)
   stopAutoplay()
+  observer?.disconnect()
 })
 </script>
 
@@ -186,6 +215,9 @@ onUnmounted(() => {
 }
 
 .review-card {
+  display: block;
+  width: 100%;
+  background: var(--white);
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -259,11 +291,21 @@ onUnmounted(() => {
 .carousel-dots {
   display: flex;
   justify-content: center;
-  gap: var(--space-sm);
+  gap: 0;
+  flex-wrap: wrap;
   margin-top: var(--space-xl);
 }
 
 .dot {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+
+.dot::before {
+  content: '';
   width: 10px;
   height: 10px;
   border-radius: var(--radius-circle);
@@ -271,23 +313,45 @@ onUnmounted(() => {
   transition: all var(--transition-base);
 }
 
-.dot.active {
+.dot.active::before {
   background: var(--secondary);
-  width: 28px;
+  width: 24px;
   border-radius: var(--radius-pill);
+}
+
+.autoplay-control {
+  display: block;
+  margin: var(--space-sm) auto 0;
+  min-height: 44px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--secondary);
+  text-decoration: underline;
 }
 
 /* Lightbox */
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
+  background: transparent;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   animation: fadeIn 0.3s ease-out;
   padding: var(--space-lg);
+  border: 0;
+  margin: auto;
+  width: min(100%, 548px);
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.lightbox[open] {
+  display: flex;
+}
+
+.lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .lightbox-content {
@@ -303,8 +367,8 @@ onUnmounted(() => {
   right: 12px;
   background: rgba(255, 255, 255, 0.95);
   color: var(--secondary);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
@@ -324,10 +388,6 @@ onUnmounted(() => {
     min-width: 50%;
   }
 
-  .carousel-btn {
-    width: 36px;
-    height: 36px;
-  }
 }
 
 @media (max-width: 480px) {

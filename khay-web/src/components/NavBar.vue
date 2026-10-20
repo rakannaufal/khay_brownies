@@ -2,17 +2,17 @@
   <nav class="navbar" :class="{ scrolled: isScrolled, 'menu-open': menuOpen }">
     <div class="navbar-container container">
       <router-link to="/" class="navbar-logo" @click="menuOpen = false">
-        <img src="/images/logo.jpeg" alt="Khay Brownies" class="logo-img" />
+        <img src="/images/logo-128.webp" alt="" width="44" height="44" class="logo-img" />
         <span class="logo-text">Khay Brownies</span>
       </router-link>
 
-      <button class="hamburger" :class="{ active: menuOpen }" @click="menuOpen = !menuOpen" aria-label="Toggle menu">
+      <button class="hamburger" :class="{ active: menuOpen }" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-controls="main-navigation" :aria-label="menuOpen ? 'Tutup menu' : 'Buka menu'">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <ul class="navbar-links" :class="{ open: menuOpen }">
+      <ul id="main-navigation" class="navbar-links" :class="{ open: menuOpen }" @keydown.esc="menuOpen = false">
         <li>
           <router-link to="/" @click="menuOpen = false">
             <AppIcon name="home" :size="16" /> Beranda
@@ -169,6 +169,9 @@ onUnmounted(() => {
   gap: 5px;
   background: none;
   padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
   z-index: 1001;
 }
 
@@ -210,10 +213,12 @@ onUnmounted(() => {
     background: var(--bg-cream);
     z-index: 1000;
     transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    visibility: hidden;
   }
 
   .navbar-links.open {
     top: 0;
+    visibility: visible;
   }
 
   .navbar-links li a {

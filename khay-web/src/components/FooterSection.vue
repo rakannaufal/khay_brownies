@@ -10,7 +10,7 @@
       <div class="footer-content">
         <div class="footer-brand">
           <div class="footer-logo-wrapper">
-            <img src="/images/logo.jpeg" alt="Khay Brownies" class="footer-logo" />
+            <img src="/images/logo-128.webp" alt="" width="64" height="64" loading="lazy" class="footer-logo" />
           </div>
           <h3 class="footer-title">Khay Brownies</h3>
           <p class="footer-desc">

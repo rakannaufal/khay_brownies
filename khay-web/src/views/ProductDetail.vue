@@ -13,7 +13,7 @@
       <!-- Image Gallery -->
       <div class="detail-gallery">
         <div class="main-image-wrapper">
-          <img :src="activeImage" :alt="product.name" class="detail-main-image" />
+          <img :src="activeImage" :alt="product.name" width="960" height="960" fetchpriority="high" class="detail-main-image" />
           <div class="image-badge" v-if="product.badge">{{ product.badge }}</div>
         </div>
         <div class="thumbnail-row" v-if="product.images.length > 1">
@@ -46,10 +46,10 @@
 
         <!-- Features -->
         <div class="info-features">
-          <h3 class="features-title">
+          <h2 class="features-title">
             <AppIcon name="sparkle" :size="18" />
             Keunggulan
-          </h3>
+          </h2>
           <ul>
             <li v-for="(feature, i) in product.features" :key="i">
               <span class="feature-check">✓</span>
@@ -62,16 +62,17 @@
 
         <!-- Topping Selection -->
         <div class="topping-section" v-if="product.category === 'cup' && product.toppings && product.toppings.length > 0">
-          <h3 class="topping-title">
+          <h2 class="topping-title">
             <AppIcon name="cup" :size="18" />
             Pilih Topping
-          </h3>
+          </h2>
           <div class="topping-options">
             <button
               v-for="(topping, i) in product.toppings"
               :key="i"
               class="topping-btn"
               :class="{ active: selectedTopping === topping }"
+              :aria-pressed="selectedTopping === topping"
               @click="selectedTopping = topping"
             >
               {{ topping }}
@@ -81,25 +82,29 @@
 
         <!-- Quantity -->
         <div class="quantity-section">
-          <h3 class="quantity-title">
+          <h2 class="quantity-title">
             <AppIcon name="package" :size="18" />
             Jumlah
-          </h3>
+          </h2>
           <div class="quantity-control">
-            <button class="qty-btn" @click="decreaseQty" :disabled="quantity <= 1">−</button>
+            <button class="qty-btn" aria-label="Kurangi jumlah" @click="decreaseQty" :disabled="quantity <= 1">−</button>
             <span class="qty-display">{{ quantity }}</span>
-            <button class="qty-btn" @click="increaseQty">+</button>
+            <button class="qty-btn" aria-label="Tambah jumlah" @click="increaseQty">+</button>
           </div>
           <span class="qty-total">Total: {{ formattedTotal }}</span>
         </div>
 
         <!-- Notes -->
         <div class="notes-section">
-          <h3 class="notes-title">
+          <h2 class="notes-title">
+            <label for="order-notes">
             <AppIcon name="edit" :size="18" />
             Catatan (opsional)
-          </h3>
+            </label>
+          </h2>
           <textarea
+            id="order-notes"
+            name="notes"
             v-model="notes"
             class="notes-input"
             placeholder="Contoh: Mohon packing extra, untuk acara ulang tahun..."

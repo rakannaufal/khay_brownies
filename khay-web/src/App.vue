@@ -1,7 +1,8 @@
 <template>
   <div id="khay-app">
+    <a href="#main-content" class="skip-link">Langsung ke konten</a>
     <NavBar />
-    <main>
+    <main id="main-content" tabindex="-1">
       <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
           <component :is="Component" />
@@ -14,9 +15,17 @@
 </template>
 
 <script setup>
+import { defineAsyncComponent, hydrateOnInteraction, hydrateOnVisible } from 'vue'
 import NavBar from './components/NavBar.vue'
-import FooterSection from './components/FooterSection.vue'
-import FloatingWhatsApp from './components/FloatingWhatsApp.vue'
+
+const FooterSection = defineAsyncComponent({
+  loader: () => import('./components/FooterSection.vue'),
+  hydrate: hydrateOnVisible({ rootMargin: '200px' }),
+})
+const FloatingWhatsApp = defineAsyncComponent({
+  loader: () => import('./components/FloatingWhatsApp.vue'),
+  hydrate: hydrateOnInteraction(['pointerover', 'focusin']),
+})
 </script>
 
 <style scoped>

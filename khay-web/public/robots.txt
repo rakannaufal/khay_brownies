@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://khay-brownies.vercel.app/sitemap.xml

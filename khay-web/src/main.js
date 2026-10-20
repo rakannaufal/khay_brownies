@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
+import { createApp, createSSRApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import { createAppRouter } from './router'
+import './assets/fonts.css'
 import './assets/main.css'
 
-const app = createApp(App)
+const root = document.getElementById('app')
+const app = root.dataset.prerendered ? createSSRApp(App) : createApp(App)
+const router = createAppRouter()
 app.use(router)
-app.mount('#app')
+router.isReady().then(() => app.mount(root))

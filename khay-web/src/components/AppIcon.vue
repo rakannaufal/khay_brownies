@@ -1,5 +1,7 @@
 <template>
   <svg
+    aria-hidden="true"
+    focusable="false"
     :width="size"
     :height="size"
     :viewBox="viewBox"
