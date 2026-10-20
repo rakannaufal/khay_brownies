@@ -114,6 +114,7 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 
 .hero-container {
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3xl);
   align-items: center;
@@ -249,7 +250,12 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 
 .wiggle-text {
   display: inline-block;
-  animation: wiggle 2s ease-in-out infinite;
+}
+
+@media (hover: hover) {
+  .hero-title:hover .wiggle-text {
+    animation: wiggle 0.5s ease-in-out;
+  }
 }
 
 .hero-description {
