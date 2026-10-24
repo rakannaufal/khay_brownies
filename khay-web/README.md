@@ -28,6 +28,11 @@ Deploy `dist/` to Vercel with the project root set to `khay-web` and build comma
 `npm run build`. `vercel.json` configures SPA navigation fallback and asset caching.
 No environment variables or backend service are required.
 
+Speed Insights and Web Analytics use the official Vercel Vue components, including
+client-side route tracking. Enable both features in the Vercel project dashboard,
+then deploy to collect production visits and Web Vitals. Development mode does not
+send production analytics.
+
 Product data and image dimensions live in `src/data/products.js`. The public URL
 and page metadata live in `src/data/site.js`; keep the URL synchronized with
 `index.html`, `public/robots.txt`, and `public/sitemap.xml` if the domain changes.

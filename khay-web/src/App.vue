@@ -11,11 +11,15 @@
     </main>
     <FooterSection />
     <FloatingWhatsApp />
+    <SpeedInsights />
+    <Analytics />
   </div>
 </template>
 
 <script setup>
 import { defineAsyncComponent, hydrateOnInteraction, hydrateOnVisible } from 'vue'
+import { SpeedInsights } from '@vercel/speed-insights/vue'
+import { Analytics } from '@vercel/analytics/vue'
 import NavBar from './components/NavBar.vue'
 
 const FooterSection = defineAsyncComponent({
